@@ -4,6 +4,7 @@ import validateBody from "../decorators/validateBody.js";
 
 import authController from "../controllers/auth-controller.js";
 import authenticate from "../middlewares/authenticate.js";
+import upload from "../middlewares/upload.js";
 
 const authRouter = express.Router();
 
@@ -17,6 +18,8 @@ authRouter.post(
   validateBody(usersSchemas.userLoginSchema),
   authController.login
 );
+
+authRouter.patch('/avatars', authenticate, upload.single("avatar"), authController.avatarUpdate)
 
 authRouter.get("/current", authenticate, authController.getCurrent);
 
