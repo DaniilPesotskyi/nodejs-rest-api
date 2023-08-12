@@ -19,10 +19,19 @@ authRouter.post(
   authController.login
 );
 
-authRouter.patch('/avatars', authenticate, upload.single("avatar"), authController.avatarUpdate)
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authController.avatarUpdate
+);
 
 authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.logout);
+
+authRouter.get("/verify/:verificationToken", authController.verify);
+
+authRouter.post("/verify", validateBody(usersSchemas.userEmailSchema), authController.resendVerifyEmail)
 
 export default authRouter;
